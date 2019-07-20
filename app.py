@@ -84,7 +84,16 @@ app.layout = html.Div(children=[
         {"name": col, "id": col} for col in parks_overview_df.columns
       ],
       data=parks_overview_df.to_dict('records'),
-      filter_action="native",
+      style_cell={'textAlign': 'left'},
+      style_cell_conditional=[
+        {'if': {'column_id': 'name'},
+         'width': '40%'}
+    ],
+      style_table={
+        'maxHeight': '150px',
+        'overflowY': 'scroll',
+        'overflowX': 'scroll'
+    },
       sort_action="native",
       sort_mode="multi"
     )
