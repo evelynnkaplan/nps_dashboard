@@ -2,6 +2,7 @@ import requests
 import pandas as pd 
 from pandas.io.json import json_normalize
 import dash
+import dash_table
 import dash_core_components as dcc 
 import dash_html_components as html 
 import plotly.express as px
@@ -31,22 +32,63 @@ for state, visits in visits_by_state.items():
 
 visits_df = pd.DataFrame(visits_by_state_nested)
 
-# fig = px.bar(, x='state', y='visits')
-# fig.show()
+# fig = px.bar(parks_overview_df, x='state', y='visits')
 
-fig1 = go.Figure(data=go.Choropleth(
-  locations=visits_df['state'], 
-  z = visits_df['visits'], 
-  locationmode = 'USA-states', 
-  colorscale = 'Greens',
-  colorbar_title = "Park Visits",
-))
+# fig1 = go.Figure(data=go.Choropleth(
+#   locations=visits_df['state'], 
+#   z = visits_df['visits'], 
+#   locationmode = 'USA-states', 
+#   colorscale = 'Greens',
+#   colorbar_title = "Park Visits",
+# ))
 
-fig1.update_layout(
-  geo_scope='usa'
-)
+# fig1.update_layout(
+#   geo_scope='usa'
+# )
 
-fig1.show()
+app.layout = html.Div(children=[
+  html.H1("Hi"),
+
+   dcc.Graph(
+     id='visits-by-state',
+     figure={
+       'data': [
+        go.Choropleth(
+          locations=visits_df['state'], 
+          z = visits_df['visits'], 
+          locationmode = 'USA-states', 
+          colorscale = 'Greens',
+          colorbar_title = "Park Visits")
+       ],
+       'layout': go.Layout(geo_scope='usa'),
+     }
+   ),
+
+  #  dcc.Graph(
+  #    id = 'park-visits-table',
+  #    figure = {
+  #      'data': [
+  #         go.Table(
+  #           header=dict(values=list(parks_overview_df.columns),
+  #             fill_color='paleturquoise',
+  #             align='left'),
+  #           cells=dict(values=[parks_overview_df.name, parks_overview_df.state, parks_overview_df.visits],
+  #             fill_color='lavender',
+  #             align='left')
+  #             )
+  #          ]}),
+
+    dash_table.DataTable(
+      id='interactive-park-visits-table',
+      columns=[
+        {"name": col, "id": col} for col in parks_overview_df.columns
+      ],
+      data=parks_overview_df.to_dict('records'),
+      filter_action="native",
+      sort_action="native",
+      sort_mode="multi"
+    )
+])
 
 if __name__ == '__main__':
   app.run_server(debug=True)
