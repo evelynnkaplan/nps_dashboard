@@ -1,4 +1,5 @@
 import requests 
+from datetime import datetime
 import pandas as pd 
 from pandas.io.json import json_normalize
 import dash
@@ -10,8 +11,11 @@ import plotly.graph_objects as go
 
 app = dash.Dash(__name__)
 
-resp = requests.get('http://mynpspass.herokuapp.com/api/parks/')
-parks = resp.json()
+parks_resp = requests.get('http://mynpspass.herokuapp.com/api/parks/')
+visits_resp = requests.get('http://mynpspass.herokuapp.com/api/visits')
+parks = parks_resp.json()
+all_visits = visits_resp.json()
+
 park_visits = []
 visits_by_state = {}
 for park in parks:
@@ -30,32 +34,32 @@ for state, visits in visits_by_state.items():
   visits_by_state_nested['state'].append(state)
   visits_by_state_nested['visits'].append(visits)
 
-visits_df = pd.DataFrame(visits_by_state_nested)
+park_visits_df = pd.DataFrame(visits_by_state_nested)
 
-# fig = px.bar(parks_overview_df, x='state', y='visits')
+visits_by_month = {}
+visits_by_month_nested = {'month': [], 'visits': []}
 
-# fig1 = go.Figure(data=go.Choropleth(
-#   locations=visits_df['state'], 
-#   z = visits_df['visits'], 
-#   locationmode = 'USA-states', 
-#   colorscale = 'Greens',
-#   colorbar_title = "Park Visits",
-# ))
+for visit in all_visits:
+  visit['date'] = datetime.strptime(visit['date'], '%Y-%m-%d')
+  
+  if visit['date'].month not in visits_by_month:
+    visits_by_month[visit['date'].month] = 1
+  else:
+    visits_by_month[visit['date'].month] += 1
 
-# fig1.update_layout(
-#   geo_scope='usa'
-# )
+visits_by_month = sorted(visits_by_month.items())
+visits_months_df = pd.DataFrame(visits_by_month, columns=['month', 'visits'])
 
 app.layout = html.Div(children=[
-  html.H1("Hi"),
+  html.H1("Hi", id="title"),
 
    dcc.Graph(
      id='visits-by-state',
      figure={
        'data': [
         go.Choropleth(
-          locations=visits_df['state'], 
-          z = visits_df['visits'], 
+          locations = park_visits_df['state'], 
+          z = park_visits_df['visits'], 
           locationmode = 'USA-states', 
           colorscale = 'Greens',
           colorbar_title = "Park Visits")
@@ -63,20 +67,6 @@ app.layout = html.Div(children=[
        'layout': go.Layout(geo_scope='usa'),
      }
    ),
-
-  #  dcc.Graph(
-  #    id = 'park-visits-table',
-  #    figure = {
-  #      'data': [
-  #         go.Table(
-  #           header=dict(values=list(parks_overview_df.columns),
-  #             fill_color='paleturquoise',
-  #             align='left'),
-  #           cells=dict(values=[parks_overview_df.name, parks_overview_df.state, parks_overview_df.visits],
-  #             fill_color='lavender',
-  #             align='left')
-  #             )
-  #          ]}),
 
     dash_table.DataTable(
       id='interactive-park-visits-table',
@@ -90,12 +80,21 @@ app.layout = html.Div(children=[
          'width': '40%'}
     ],
       style_table={
-        'maxHeight': '150px',
+        'maxHeight': '18vw',
         'overflowY': 'scroll',
         'overflowX': 'scroll'
     },
       sort_action="native",
       sort_mode="multi"
+    ),
+
+    dcc.Graph(
+      id='visits-by-month',
+      figure={
+        'data': [
+          {'x': visits_months_df['month'], 'y': visits_months_df['visits'], 'type': 'bar'}
+        ]
+      }
     )
 ])
 

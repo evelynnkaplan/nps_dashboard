@@ -4,10 +4,10 @@
   grid-template-columns: 50% 50%;
 }
 
-div h1 {
+ h1 {
   grid-row: 1;
-  grid-column: 1 / span 2;
-  text-align: center;
+  grid-column: 2;
+  text-align: right;
 }
 
 #visits-by-state {
@@ -15,6 +15,16 @@ div h1 {
   grid-column: 1;
 }
 
+#interactive-park-visits-table {
+  grid-row: 3;
+  grid-column: 1;
+}
+
 #interactive-park-visits-table tr {
   font-size: 1vw;
+}
+
+#visits-by-month {
+  grid-row: 2;
+  grid-column: 2;
 }
