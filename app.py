@@ -38,7 +38,7 @@ fig1 = go.Figure(data=go.Choropleth(
   locations=visits_df['state'], 
   z = visits_df['visits'], 
   locationmode = 'USA-states', 
-  colorscale = 'Reds',
+  colorscale = 'Greens',
   colorbar_title = "Park Visits",
 ))
 
