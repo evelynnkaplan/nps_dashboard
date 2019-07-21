@@ -13,8 +13,10 @@ app = dash.Dash(__name__)
 
 parks_resp = requests.get('http://mynpspass.herokuapp.com/api/parks/')
 visits_resp = requests.get('http://mynpspass.herokuapp.com/api/visits')
+passholders_resp = requests.get('http://mynpspass.herokuapp.com/api/passholders')
 parks = parks_resp.json()
 all_visits = visits_resp.json()
+passholders = passholders_resp.json()
 
 park_visits = []
 visits_by_state = {}
@@ -49,6 +51,36 @@ for visit in all_visits:
 
 visits_by_month = sorted(visits_by_month.items())
 visits_months_df = pd.DataFrame(visits_by_month, columns=['month', 'visits'])
+
+passholder_visits_by_year = {}
+passholder_visits = []
+for ph in passholders:
+  full_name = f"{ph['first_name']} {ph['last_name']}"
+  passholder_visits_by_year[full_name] = {}
+
+  for visit in ph['visits']:
+    passholder_visits.append(visit.split(', '))
+
+for visit in passholder_visits:
+  visit[2] = datetime.strptime(visit[2], '%Y-%m-%d').year
+  
+  if visit[2] not in passholder_visits_by_year[visit[0]]:
+    passholder_visits_by_year[visit[0]][visit[2]] = 1
+  else:
+    passholder_visits_by_year[visit[0]][visit[2]] += 1
+
+for ph in passholder_visits_by_year:
+  lifetime_visits = 0
+  years_visited = len(passholder_visits_by_year[ph])
+  
+  for visit_total in passholder_visits_by_year[ph].values():
+    lifetime_visits += visit_total
+
+  if years_visited != 0:
+    passholder_visits_by_year[ph]['avg_visits'] = (lifetime_visits/years_visited)
+  else:
+    passholder_visits_by_year[ph]['avg_visits'] = 0
+
 
 app.layout = html.Div(children=[
   html.H1("Hi", id="title"),
