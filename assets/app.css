@@ -1,30 +1,41 @@
-#_dash-app-content {
+#_dash-app-content > div:first-child {
   display: grid;
-  grid-template-rows: 10% 45% 45%;
+  grid-template-rows: 8% 2;
   grid-template-columns: 50% 50%;
 }
 
  h1 {
   grid-row: 1;
-  grid-column: 2;
-  text-align: right;
+  grid-column: 1 / span 2;
+  text-align: center;
+ }
+
+ h2 {
+  text-align: center;
+  font-size: 2em;
+ }
+
+#visits-by-state-container {
+  grid-column: 1;
+  grid-row: 2;
 }
 
-#visits-by-state {
-  grid-row: 2;
+#visits-by-month {
   grid-column: 1;
+  grid-row: 3;
 }
 
 #interactive-park-visits-table {
-  grid-row: 3;
-  grid-column: 1;
+  grid-column: 2;
+  grid-row: 2;
 }
 
 #interactive-park-visits-table tr {
   font-size: 1vw;
 }
 
-#visits-by-month {
-  grid-row: 2;
+#avg-visits-per-year {
   grid-column: 2;
+  grid-row: 3;
 }
+

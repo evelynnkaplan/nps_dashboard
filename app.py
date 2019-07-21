@@ -107,7 +107,10 @@ for num in avg_visits:
     avg_visits_grouped['More than 5'] += 1
 
 app.layout = html.Div(children=[
-  html.H1("Hi", id="title"),
+  html.H1("National Park Annual Passholder Data", id="title"),
+
+  html.Div(id="visits-by-state-container", children=[
+    html.H2("hi", id="visits-by-state-title"),
 
    dcc.Graph(
      id='visits-by-state',
@@ -123,6 +126,10 @@ app.layout = html.Div(children=[
        'layout': go.Layout(geo_scope='usa'),
      }
    ),
+  ]),
+  
+  html.Div(id="interactive-park-visits-container", children=[
+    html.H2("hi", id="interactive-park-visits-title"),
 
     dash_table.DataTable(
       id='interactive-park-visits-table',
@@ -136,13 +143,17 @@ app.layout = html.Div(children=[
          'width': '40%'}
     ],
       style_table={
-        'maxHeight': '18vw',
+        'max-height': '500px',
         'overflowY': 'scroll',
         'overflowX': 'scroll'
     },
       sort_action="native",
       sort_mode="multi"
     ),
+  ]),
+
+  html.Div(id="visits-by-month-container", children=[
+    html.H2("hi", id="visits-by-month-title"),
 
     dcc.Graph(
       id='visits-by-month',
@@ -152,6 +163,10 @@ app.layout = html.Div(children=[
         ]
       }
     ),
+  ]),
+
+  html.Div(id="avg-visits-per-year-container", children=[
+    html.H2("hi", id="avg-visits-per-year-title"),
 
     dcc.Graph(
      id='avg-visits-per-year',
@@ -164,6 +179,7 @@ app.layout = html.Div(children=[
        ],
      }
    ),
+  ]),
 ])
 
 if __name__ == '__main__':
