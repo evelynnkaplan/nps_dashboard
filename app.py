@@ -9,7 +9,10 @@ import dash_html_components as html
 import plotly.express as px
 import plotly.graph_objects as go
 
-app = dash.Dash(__name__)
+external_stylesheets = ['https://fonts.googleapis.com/css?family=Open+Sans|PT+Serif&display=swap']
+
+app = dash.Dash(__name__,
+external_stylesheets=external_stylesheets)
 
 parks_resp = requests.get('http://mynpspass.herokuapp.com/api/parks/')
 visits_resp = requests.get('http://mynpspass.herokuapp.com/api/visits')
@@ -110,7 +113,7 @@ app.layout = html.Div(children=[
   html.H1("National Park Annual Passholder Data", id="title"),
 
   html.Div(id="visits-by-state-container", children=[
-    html.H2("hi", id="visits-by-state-title"),
+    html.H2("Park Visits by State", id="visits-by-state-title"),
 
    dcc.Graph(
      id='visits-by-state',
@@ -129,7 +132,7 @@ app.layout = html.Div(children=[
   ]),
   
   html.Div(id="interactive-park-visits-container", children=[
-    html.H2("hi", id="interactive-park-visits-title"),
+    html.H2("Park Visits by National Park", id="interactive-park-visits-title"),
 
     dash_table.DataTable(
       id='interactive-park-visits-table',
@@ -153,7 +156,7 @@ app.layout = html.Div(children=[
   ]),
 
   html.Div(id="visits-by-month-container", children=[
-    html.H2("hi", id="visits-by-month-title"),
+    html.H2("Park Visits by Month", id="visits-by-month-title"),
 
     dcc.Graph(
       id='visits-by-month',
@@ -166,7 +169,7 @@ app.layout = html.Div(children=[
   ]),
 
   html.Div(id="avg-visits-per-year-container", children=[
-    html.H2("hi", id="avg-visits-per-year-title"),
+    html.H2("Average Yearly Park Visits by Passholders", id="avg-visits-per-year-title"),
 
     dcc.Graph(
      id='avg-visits-per-year',

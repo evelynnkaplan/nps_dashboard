@@ -1,3 +1,7 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 #_dash-app-content > div:first-child {
   display: grid;
   grid-template-rows: 8% 2;
@@ -8,11 +12,12 @@
   grid-row: 1;
   grid-column: 1 / span 2;
   text-align: center;
+  font-family: 'PT Serif', serif;
  }
 
  h2 {
   text-align: center;
-  font-size: 2em;
+  font-size: 1.5em;
  }
 
 #visits-by-state-container {
@@ -32,6 +37,7 @@
 
 #interactive-park-visits-table tr {
   font-size: 1vw;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #avg-visits-per-year {
