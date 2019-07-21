@@ -82,10 +82,18 @@ for ph in passholder_visits_by_year:
     passholder_visits_by_year[ph]['avg_visits'] = 0
 
 avg_visits = []
-for ph in passholder_visits_by_year:
-  avg_visits.append(passholder_visits_by_year[ph]['avg_visits']
 
-avg_visits_grouped = {'less than 1': 0, '1-2': 0, '2-3': 0, '3-5': 0, 'More than 5': 0}
+for ph in passholder_visits_by_year:
+  avg_visits.append(passholder_visits_by_year[ph]['avg_visits'])
+
+avg_visits_grouped = {
+  'less than 1': 0, 
+  '1-2': 0, 
+  '2-3': 0, 
+  '3-5': 0, 
+  'More than 5': 0
+}
+
 for num in avg_visits:
   if num < 1:
     avg_visits_grouped['less than 1'] += 1
@@ -143,7 +151,19 @@ app.layout = html.Div(children=[
           {'x': visits_months_df['month'], 'y': visits_months_df['visits'], 'type': 'bar'}
         ]
       }
-    )
+    ),
+
+    dcc.Graph(
+     id='avg-visits-per-year',
+     figure={
+       'data': [
+        go.Pie(
+          labels = list(avg_visits_grouped.keys()),
+          values = list(avg_visits_grouped.values())
+        )
+       ],
+     }
+   ),
 ])
 
 if __name__ == '__main__':
