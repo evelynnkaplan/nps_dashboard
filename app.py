@@ -54,7 +54,9 @@ for visit in all_visits:
     visits_by_month[visit['date'].month] += 1
 
 visits_by_month = sorted(visits_by_month.items())
+
 visits_months_df = pd.DataFrame(visits_by_month, columns=['month', 'visits'])
+months_ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 passholder_visits_by_year = {}
 passholder_visits = []
@@ -164,8 +166,13 @@ app.layout = html.Div(children=[
       figure={
         'data': [
           {'x': visits_months_df['month'], 'y': visits_months_df['visits'], 'type': 'bar'}
-        ]
-      }
+        ],
+        'layout': {
+          'xaxis': {
+            'tickmode': 'array',
+            'tickvals': visits_months_df['month'],
+            'ticktext': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
+      }},
     ),
   ]),
 
