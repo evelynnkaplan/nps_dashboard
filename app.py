@@ -13,6 +13,8 @@ external_stylesheets = ['https://fonts.googleapis.com/css?family=Open+Sans|PT+Se
 app = dash.Dash(__name__,
 external_stylesheets=external_stylesheets)
 
+server = app.server
+
 parks_resp = requests.get('http://mynpspass.herokuapp.com/api/parks/')
 visits_resp = requests.get('http://mynpspass.herokuapp.com/api/visits')
 passholders_resp = requests.get('http://mynpspass.herokuapp.com/api/passholders')
