@@ -2,11 +2,18 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-#_dash-app-content > div:first-child {
+#react-entry-point > div:first-child {
   display: grid;
   grid-template-rows: 8% 2;
   grid-template-columns: 50% 50%;
 }
+
+/* the below _dash-app-content styling applies only to local machine; deployment on Heroku configures slightly HTML differently */
+/* #_dash-app-content > div:first-child {
+  display: grid;
+  grid-template-rows: 8% 2;
+  grid-template-columns: 50% 50%;
+} */
 
  h1 {
   grid-row: 1;
