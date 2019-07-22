@@ -1,4 +1,3 @@
-credentials/Credentials.py
 *.pyc
 .DS_Store
 .env

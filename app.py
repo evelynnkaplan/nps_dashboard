@@ -5,8 +5,7 @@ from pandas.io.json import json_normalize
 import dash
 import dash_table
 import dash_core_components as dcc 
-import dash_html_components as html 
-import plotly.express as px
+import dash_html_components as html
 import plotly.graph_objects as go
 
 external_stylesheets = ['https://fonts.googleapis.com/css?family=Open+Sans|PT+Serif&display=swap']
