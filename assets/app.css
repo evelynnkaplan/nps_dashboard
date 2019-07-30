@@ -44,10 +44,12 @@ body {
 
 #visits-by-month-container {
   box-shadow: 8px 8px 8px black;
+  margin: 20px;
 }
 
 #interactive-park-visits-container {
   box-shadow: 8px 8px 8px black;
+  margin: 20px;
 }
 
 #interactive-park-visits-table {
@@ -62,6 +64,7 @@ body {
 
 #avg-visits-per-year-container {
   box-shadow: 8px 8px 8px black;
+  margin: 20px;
 }
 
 #avg-visits-per-year {
