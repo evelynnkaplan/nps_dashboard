@@ -27,7 +27,9 @@ body {
  h2 {
   text-align: center;
   font-size: 1.5em;
-  color: white;
+  color: black;
+  padding-top: 25px;
+  display: block;
  }
 
 #visits-by-state-container {
@@ -35,6 +37,7 @@ body {
   grid-row: 2;
   box-shadow: 8px 8px 8px black;
   margin: 20px;
+  background-color: white;
 }
 
 #visits-by-month {
@@ -45,11 +48,13 @@ body {
 #visits-by-month-container {
   box-shadow: 8px 8px 8px black;
   margin: 20px;
+  background-color: white;
 }
 
 #interactive-park-visits-container {
   box-shadow: 8px 8px 8px black;
   margin: 20px;
+  background-color: white;
 }
 
 #interactive-park-visits-table {
@@ -65,6 +70,7 @@ body {
 #avg-visits-per-year-container {
   box-shadow: 8px 8px 8px black;
   margin: 20px;
+  background-color: white;
 }
 
 #avg-visits-per-year {
