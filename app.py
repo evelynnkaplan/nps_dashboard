@@ -22,6 +22,8 @@ parks = parks_resp.json()
 all_visits = visits_resp.json()
 passholders = passholders_resp.json()
 
+# Visits by state calculations
+
 park_visits = []
 visits_by_state = {}
 for park in parks:
@@ -42,6 +44,8 @@ for state, visits in visits_by_state.items():
 
 park_visits_df = pd.DataFrame(visits_by_state_nested)
 
+# Visits by month calculations
+
 visits_by_month = {}
 visits_by_month_nested = {'month': [], 'visits': []}
 
@@ -57,6 +61,8 @@ visits_by_month = sorted(visits_by_month.items())
 
 visits_months_df = pd.DataFrame(visits_by_month, columns=['month', 'visits'])
 months_ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Passholder visits by year calculations
 
 passholder_visits_by_year = {}
 passholder_visits = []
@@ -86,6 +92,8 @@ for ph in passholder_visits_by_year:
     passholder_visits_by_year[ph]['avg_visits'] = (lifetime_visits/years_visited)
   else:
     passholder_visits_by_year[ph]['avg_visits'] = 0
+
+#Average visits by passholder in a year calculations
 
 avg_visits = []
 
@@ -196,4 +204,4 @@ app.layout = html.Div(children=[
 ])
 
 if __name__ == '__main__':
-  app.run_server(debug=True)
+  app.run_server(debug=False)
