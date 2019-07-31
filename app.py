@@ -93,24 +93,24 @@ for ph in passholder_visits_by_year:
   avg_visits.append(passholder_visits_by_year[ph]['avg_visits'])
 
 avg_visits_grouped = {
-  'less than 1': 0, 
-  '1-2': 0, 
-  '2-3': 0, 
-  '3-5': 0, 
-  'More than 5': 0
+  'Less than 1 visit': 0, 
+  '1-2 visits': 0, 
+  '2-3 visits': 0, 
+  '3-5 visits': 0, 
+  'More than 5 visits': 0
 }
 
 for num in avg_visits:
   if num < 1:
-    avg_visits_grouped['less than 1'] += 1
+    avg_visits_grouped['Less than 1 visit'] += 1
   elif 1 <= num < 2:
-    avg_visits_grouped['1-2'] += 1
+    avg_visits_grouped['1-2 visits'] += 1
   elif 2 <= num < 3:
-    avg_visits_grouped['2-3'] += 1
+    avg_visits_grouped['2-3 visits'] += 1
   elif 3 <= num <= 5:
-    avg_visits_grouped['3-5'] += 1
+    avg_visits_grouped['3-5 visits'] += 1
   elif 5 < num:
-    avg_visits_grouped['More than 5'] += 1
+    avg_visits_grouped['More than 5 visits'] += 1
 
 app.layout = html.Div(children=[
   html.H1("National Park Annual Passholder Data", id="title"),
@@ -185,7 +185,9 @@ app.layout = html.Div(children=[
        'data': [
         go.Pie(
           labels = list(avg_visits_grouped.keys()),
-          values = list(avg_visits_grouped.values())
+          values = list(avg_visits_grouped.values()),
+          hole = 0.4,
+          direction = "counterclockwise",
         )
        ],
      }
